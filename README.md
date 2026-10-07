@@ -30,10 +30,11 @@ dashabei/                   ← 本仓库（线上目录）
 │  ├─ members/*.jpg         # 11 张个人名片截图
 │  └─ cups/*.png            # 2 张杯赛队伍得分截图
 ├─ deploy/
-│  └─ nginx-dashabei.conf   # 云服务器 nginx 站点配置样例
+│  ├─ nginx-dashabei.conf   # 云服务器 nginx 站点配置样例
+│  └─ setup-ubuntu.sh       # 服务器初始化（装 nginx + 配站点，幂等）
 └─ tools/
    ├─ inject-fallback.mjs   # 把 site-data.json 注入 app.js 的 FALLBACK_DATA（幂等）
-   └─ deploy.ps1            # scp 一键上线 / 更新（Windows 本地 → 服务器）
+   └─ deploy.ps1            # scp 一键上线 / 更新 + 远端权限修正（Windows 本地 → 服务器）
 ```
 
 ## 2. 打开方式
@@ -42,7 +43,7 @@ dashabei/                   ← 本仓库（线上目录）
 | --- | --- |
 | 双击 `index.html` | 直接可用。`file://` 下浏览器禁止 `fetch` 本地文件，页面会自动使用 `app.js` 顶部的 `FALLBACK_DATA`，功能完全一致，且不会产生控制台报错 |
 | 本地静态服务器（可选） | 在仓库根目录执行 `python -m http.server 8000`，访问 `http://localhost:8000/`，此时会真正读取 `data/site-data.json` |
-| 线上 | GitHub Pages：`https://wei-duanmu.github.io/dashabei/`；云服务器：见第 11 节 |
+| 线上 | 云服务器：<http://47.242.90.95/>；GitHub Pages 备用：<https://wei-duanmu.github.io/dashabei/>（详见第 11 节） |
 
 两条路径的数据内容必须一致 —— `tools/inject-fallback.mjs` 就是干这个的（见第 4 节）。
 
@@ -185,56 +186,47 @@ UI 会自动适配，**不需要改任何代码**：新 Tab、冠军横幅、名
 
 ## 11. 部署
 
-### 11.1 GitHub（代码托管 + Pages 备用入口）
+### 11.1 线上地址
 
-- 仓库：<https://github.com/Wei-DuanMu/dashabei>
-- 线上（GitHub Pages，分支 `main` 根目录，`.nojekyll` 已就位）：<https://wei-duanmu.github.io/dashabei/>
-- 更新即上线：`git push` 后 Pages 会在 1 分钟内自动重建，无需任何构建步骤。
+| 入口 | 地址 | 说明 |
+| --- | --- | --- |
+| 云服务器（主） | <http://47.242.90.95/> | 阿里云香港 · Ubuntu 22.04 · nginx 1.18 · 站点目录 `/var/www/dashabei` |
+| GitHub 仓库 | <https://github.com/Wei-DuanMu/dashabei> | 代码托管（public） |
+| GitHub Pages（备用） | <https://wei-duanmu.github.io/dashabei/> | 分支 `main` 根目录，`.nojekyll` 已就位，`git push` 后 1 分钟内自动重建 |
+
+### 11.2 服务器是怎么装起来的（可复现）
+
+服务器初始化脚本已进仓库：`deploy/setup-ubuntu.sh`（幂等，可反复执行）。在一台新的 Ubuntu 22.04/24.04 上：
 
 ```bash
-git add -A
-git commit -m "data: 更新赛事数据"
-git push
+# 传上去后执行（root 直接 bash，非 root 用 sudo bash）
+bash setup-ubuntu.sh
 ```
 
-### 11.2 云服务器（nginx，首次部署）
+它会：装 nginx（默认源不可用时自动切阿里云内网镜像）→ 建 `/var/www/dashabei` →
+写 `/etc/nginx/sites-available/dashabei`（作为 80 的 `default_server`，所以**用 IP 也能直接访问**）→
+关掉发行版默认站点 → 放行 ufw 的 80/443（如启用）→ `nginx -t` 校验并启动 → 本机 curl 自检。
 
-1. **装公钥**（本地生成 `~/.ssh/dashabei_deploy`，把 `.pub` 内容装到服务器）：
+> 有域名后：把配置里的 `server_name _;` 改成域名，再执行
+> `sudo apt install -y certbot python3-certbot-nginx && sudo certbot --nginx -d 你的域名` 即可上 HTTPS。
 
-   ```bash
-   ssh -p <端口> <用户>@<服务器IP> "mkdir -p ~/.ssh && chmod 700 ~/.ssh && \
-     echo '<把 dashabei_deploy.pub 的内容贴在这里>' >> ~/.ssh/authorized_keys && \
-     chmod 600 ~/.ssh/authorized_keys"
-   ```
+### 11.3 上传 / 更新站点文件
 
-2. **建站点目录**：
+```powershell
+powershell -File tools\deploy.ps1 -Server 47.242.90.95 -User root -Target /var/www/dashabei
+powershell -File tools\deploy.ps1 -Server 47.242.90.95 -Target /var/www/dashabei -DryRun   # 只看要传什么
+```
 
-   ```bash
-   sudo mkdir -p /var/www/dashabei && sudo chown -R $USER /var/www/dashabei
-   ```
+脚本做三件事：`mkdir -p` 站点目录 → `scp` 上传（只传站点需要的 6 项，不传 tools/deploy/README/.git）→
+**修正远端权限（目录 755 / 文件 644）并自检**。
 
-3. **放 nginx 配置**：把 `deploy/nginx-dashabei.conf` 传到 `/etc/nginx/conf.d/dashabei.conf`，
-   改掉里面的 `server_name`（你的域名/IP）与 `root`，然后：
+两个已经踩过、并已写进脚本的坑：
 
-   ```bash
-   sudo nginx -t && sudo systemctl reload nginx
-   ```
+1. **`pwsh` 不在 PATH** —— 用 Windows 自带的 `powershell`（脚本存为 UTF-8 **with BOM**，5.1 才会正确读中文）。
+2. **`scp -r` 从 Windows 上传的目录默认是 `drwx------`** —— nginx 的 `www-data` 进不去，
+   `try_files` 会返回 404（现象：文件明明传上去了却打不开）。脚本第 3 步会统一 `chmod 755` 目录、`chmod 644` 文件。
 
-4. **上传站点文件**（Windows 本地，只传站点需要的文件，不传 tools/deploy/README/.git）：
-
-   ```powershell
-   pwsh -File tools/deploy.ps1 -Server <服务器IP> -User root -Target /var/www/dashabei
-   pwsh -File tools/deploy.ps1 -Server <服务器IP> -Target /var/www/dashabei -DryRun   # 只看要传什么
-   ```
-
-5. **上 HTTPS**（有域名的前提下）：
-
-   ```bash
-   sudo apt install -y certbot python3-certbot-nginx
-   sudo certbot --nginx -d 你的域名
-   ```
-
-### 11.3 日常更新（一条龙）
+### 11.4 日常更新（一条龙）
 
 ```bash
 # 1) 改数据：data/site-data.json（新增一届 / 新增名片，字段见第 3、5、6 节）
@@ -243,6 +235,6 @@ node tools/inject-fallback.mjs
 # 3) 本地双击 index.html 确认无误
 # 4) 提交并推送（GitHub Pages 自动更新）
 git add -A && git commit -m "data: 新增第三届" && git push
-# 5) 同步到云服务器
-pwsh -File tools/deploy.ps1 -Server <服务器IP> -User root -Target /var/www/dashabei
+# 5) 同步到云服务器（自动修权限 + 自检）
+powershell -File tools\deploy.ps1 -Server 47.242.90.95 -User root -Target /var/www/dashabei
 ```
