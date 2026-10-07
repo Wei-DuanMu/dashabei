@@ -134,7 +134,9 @@ code{font-family:var(--font-mono);font-size:.92em;color:var(--cyan)}
 .note-tbd{color:var(--tx-2);font-size:12.5px;margin-top:14px}
 .sub-title{font-size:clamp(18px,1.8vw,24px);margin:clamp(30px,4vw,54px) 0 18px;display:flex;align-items:baseline}
 
-/* 待补充占位字段 */
+/* 规则说明小字（原「待补充」提示位，现已填入真实规则指向） */
+.note-rule{color:var(--tx-2);font-size:12.5px;margin-top:14px}
+/* 待补充占位字段：以后要新增未知字段时，给它套上 .tbd 即可重现琥珀色虚线样式 */
 .tbd{
   display:inline-block;min-width:6ch;padding:1px 8px;color:var(--amber);
   background:var(--amber-soft);border:1px dashed var(--amber-line);
