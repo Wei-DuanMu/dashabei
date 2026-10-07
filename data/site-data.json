@@ -208,9 +208,9 @@
   ],
   "cups": [
     {
-      "index": 1,
-      "name": "大啥杯 #1",
-      "date": "2026-06-08",
+      "index": 0,
+      "name": "大啥杯 #0",
+      "date": "2023 年寒假",
       "format": "4 人小队 · 同一剧本分工",
       "shot": "assets/cups/cup1-team-scores.png",
       "teams": [
@@ -265,9 +265,9 @@
       ]
     },
     {
-      "index": 2,
-      "name": "大啥杯 #2",
-      "date": "2026-06-09",
+      "index": 1,
+      "name": "大啥杯 #1",
+      "date": "2024 年春节",
       "format": "小队赛 · 四条赛道各占一人",
       "shot": "assets/cups/cup2-team-scores.png",
       "teams": [

@@ -238,9 +238,9 @@ const FALLBACK_DATA = /*__FB_START__*/{
   ],
   "cups": [
     {
-      "index": 1,
-      "name": "大啥杯 #1",
-      "date": "2026-06-08",
+      "index": 0,
+      "name": "大啥杯 #0",
+      "date": "2023 年寒假",
       "format": "4 人小队 · 同一剧本分工",
       "shot": "assets/cups/cup1-team-scores.png",
       "teams": [
@@ -378,9 +378,9 @@ const FALLBACK_DATA = /*__FB_START__*/{
       ]
     },
     {
-      "index": 2,
-      "name": "大啥杯 #2",
-      "date": "2026-06-09",
+      "index": 1,
+      "name": "大啥杯 #1",
+      "date": "2024 年春节",
       "format": "小队赛 · 四条赛道各占一人",
       "shot": "assets/cups/cup2-team-scores.png",
       "teams": [
@@ -755,8 +755,9 @@ function renderHero(ctx) {
 /* ========================== 8. 关于赛事 ========================== */
 function renderFormats(ctx) {
   const grid = $('#formatGrid');
-  grid.innerHTML = ctx.cups.map(cup => {
-    const cls = cup.index === 1 ? 'fmt-rust' : 'fmt-cyan';
+  grid.innerHTML = ctx.cups.map((cup, cupPos) => {
+    // 届次区分色：按展示顺序交替（第 1 张锈红、第 2 张冷青……），不受届次号从 0 开始影响
+    const cls = cupPos % 2 === 0 ? 'fmt-rust' : 'fmt-cyan';
     const teamSize = cup.teams[0] ? cup.teams[0].members.length : 0;
     const hasLane = cup.teams.some(t => (t.members || []).some(m => m.lane));
     const totals = cup.teams.map(t => Number(t.total) || 0);
@@ -1366,7 +1367,7 @@ function initNav() {
 }
 
 /* ========================== 14. 启动 ========================== */
-const state = { activeCup: 1, query: '', roleFilter: 'all' };
+const state = { activeCup: 0, query: '', roleFilter: 'all' };
 
 function fatal(message) {
   const host = $('#cupPanels');
