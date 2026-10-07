@@ -1,0 +1,12 @@
+﻿# 系统与编辑器垃圾
+Thumbs.db
+Desktop.ini
+.DS_Store
+*.swp
+
+# 本地临时产物（不属于站点）
+*.log
+node_modules/
+.venv/
+_verify/
+_sitecheck/

@@ -1,0 +1,313 @@
+{
+  "site": {
+    "name": "大啥杯",
+    "subtitle": "DA SHA CUP",
+    "tagline": "方舟肉鸽非官方自娱自乐赛事",
+    "description": "大啥杯是民间自发组织的《明日方舟》集成战略（肉鸽）赛事，记录队伍成绩、参赛选手与个人名片。",
+    "version": "1.0.0"
+  },
+  "members": [
+    {
+      "id": "daoyangbang",
+      "name": "道安杨",
+      "code": "#3734",
+      "gameId": "779443278",
+      "title": "助理",
+      "titleEn": "Assistant",
+      "operator": "蛇屠箱",
+      "operatorEn": "Cuora",
+      "joinDate": "2019-07-31",
+      "theme": "FLOT",
+      "outfitCount": 124,
+      "recruitProgress": 325,
+      "signature": "不想玩啦",
+      "shot": "assets/members/01-daoyangbang-3734.jpg",
+      "shotType": "card"
+    },
+    {
+      "id": "lengyiw",
+      "name": "冷依w",
+      "code": "#2233",
+      "gameId": "384614923",
+      "title": null,
+      "titleEn": null,
+      "operator": null,
+      "operatorEn": null,
+      "joinDate": "2020-01-14",
+      "theme": "戏中身",
+      "themeEn": "The Scripted",
+      "outfitCount": 232,
+      "recruitProgress": 403,
+      "signature": "弦宝",
+      "shot": "assets/members/02-lengyiw-2233-battle.jpg",
+      "shotType": "battle"
+    },
+    {
+      "id": "lengyiw",
+      "name": "冷依w",
+      "code": "#2233",
+      "gameId": "384614923",
+      "title": null,
+      "titleEn": null,
+      "operator": null,
+      "operatorEn": null,
+      "joinDate": "2020-01-14",
+      "theme": "戏中身",
+      "themeEn": "The Scripted",
+      "outfitCount": 232,
+      "recruitProgress": 403,
+      "signature": "弦宝",
+      "shot": "assets/members/07-lengyiw-2233-card.jpg",
+      "shotType": "card"
+    },
+    {
+      "id": "yancheng",
+      "name": "言诚",
+      "code": "#2427",
+      "gameId": "58787918",
+      "title": null,
+      "titleEn": null,
+      "operator": null,
+      "operatorEn": null,
+      "joinDate": "2019-05-30",
+      "theme": "永恒的演出",
+      "themeEn": "The Eternal Show",
+      "outfitCount": 254,
+      "recruitProgress": 405,
+      "signature": "此处并无正义，唯有前路。",
+      "shot": "assets/members/03-yancheng-2427.jpg",
+      "shotType": "card"
+    },
+    {
+      "id": "shanluan",
+      "name": "山峦为晴雪所洗",
+      "code": "#8648",
+      "gameId": "260769724",
+      "title": null,
+      "titleEn": null,
+      "operator": null,
+      "operatorEn": null,
+      "joinDate": null,
+      "theme": "冰纹玉袖",
+      "themeEn": "Glazed Grace",
+      "outfitCount": 170,
+      "recruitProgress": 379,
+      "signature": "天长地久有时尽",
+      "shot": "assets/members/04-shanluan-8648.jpg",
+      "shotType": "card"
+    },
+    {
+      "id": "guzhang",
+      "name": "骨杖技师人宿逻",
+      "code": "#7171",
+      "gameId": "839632868",
+      "title": null,
+      "titleEn": null,
+      "operator": null,
+      "operatorEn": null,
+      "joinDate": "2021-05-09",
+      "theme": "永恒的演出",
+      "themeEn": "The Eternal Show",
+      "outfitCount": 177,
+      "recruitProgress": 391,
+      "signature": null,
+      "shot": "assets/members/05-guzhang-7171.jpg",
+      "shotType": "card"
+    },
+    {
+      "id": "qiongyang",
+      "name": "琼羊",
+      "code": "#0255",
+      "gameId": "368018874",
+      "title": "助理",
+      "titleEn": "Assistant",
+      "operator": "蕾缪安",
+      "operatorEn": "Lemuen",
+      "joinDate": "2021-02-15",
+      "theme": null,
+      "themeEn": null,
+      "outfitCount": 173,
+      "recruitProgress": 382,
+      "signature": "人心，向背无常",
+      "shot": "assets/members/06-qiongyang-0255.jpg",
+      "shotType": "card"
+    },
+    {
+      "id": "shaoyafan",
+      "name": "烧鸭饭",
+      "code": "#5483",
+      "gameId": "14745955",
+      "title": null,
+      "titleEn": null,
+      "operator": null,
+      "operatorEn": null,
+      "joinDate": "2019-05-13",
+      "theme": "永恒的演出",
+      "themeEn": "The Eternal Show",
+      "outfitCount": 204,
+      "recruitProgress": 387,
+      "signature": "天地让我形色！",
+      "shot": "assets/members/08-shaoyafan-5483.jpg",
+      "shotType": "card"
+    },
+    {
+      "id": "hanyushiqi",
+      "name": "涵与十七",
+      "code": "#6154",
+      "gameId": "532963658",
+      "title": null,
+      "titleEn": null,
+      "operator": null,
+      "operatorEn": null,
+      "joinDate": "2022-08-24",
+      "theme": "时序花园",
+      "themeEn": "Blooms of Time",
+      "outfitCount": 193,
+      "recruitProgress": 375,
+      "signature": "来了！",
+      "shot": "assets/members/09-hanyushiqi-6154.jpg",
+      "shotType": "card"
+    },
+    {
+      "id": "jay",
+      "name": "Jay",
+      "code": "#8562",
+      "gameId": "5296623599",
+      "title": null,
+      "titleEn": null,
+      "operator": null,
+      "operatorEn": null,
+      "joinDate": "2021-01-09",
+      "theme": "一起去狩猎啦！",
+      "themeEn": "Happy Hunting!",
+      "outfitCount": 284,
+      "recruitProgress": 402,
+      "signature": "我是老醋的狗",
+      "shot": "assets/members/10-jay-8562.jpg",
+      "shotType": "card"
+    },
+    {
+      "id": "shu",
+      "name": "溦",
+      "code": "#5895",
+      "gameId": "663235928",
+      "title": null,
+      "titleEn": null,
+      "operator": null,
+      "operatorEn": null,
+      "joinDate": null,
+      "birthday": "11-14",
+      "theme": "渡星客",
+      "themeEn": "Night Watcher",
+      "outfitCount": 190,
+      "recruitProgress": 363,
+      "signature": "随风入夜，润物无声",
+      "shot": "assets/members/11-shu-5895.jpg",
+      "shotType": "card"
+    }
+  ],
+  "cups": [
+    {
+      "index": 1,
+      "name": "大啥杯 #1",
+      "date": "2026-06-08",
+      "format": "4 人小队 · 同一剧本分工",
+      "shot": "assets/cups/cup1-team-scores.png",
+      "teams": [
+        {
+          "rank": 1,
+          "name": "四不过四队",
+          "total": 12062.8,
+          "endings": ["紧急授课", "朝竭", "圣域", "不容拒绝"],
+          "members": [
+            { "name": "百川之海", "role": "高规格美愿", "score": 1966 },
+            { "name": "林锣绸缎", "role": "祖医美愿", "score": 1560 },
+            { "name": "先志", "role": "点刺死仇", "score": 3527 },
+            { "name": "团队位", "role": "蓝图死仇", "score": 3546 }
+          ]
+        },
+        {
+          "rank": 2,
+          "name": "只因酒之杯队",
+          "total": 12052.8,
+          "endings": ["紧急授课", "朝竭", "授法"],
+          "members": [
+            { "name": "冷依w", "role": "木特美愿", "score": 3170, "memberRef": "lengyiw" },
+            { "name": "Oblivionis", "role": "蓝图死仇", "score": 3427 },
+            { "name": "道安杨", "role": "神人美愿", "score": 1677, "memberRef": "daoyangbang" },
+            { "name": "团队位", "role": "拟态涂鸦", "score": 2676 }
+          ]
+        },
+        {
+          "rank": 3,
+          "name": "以大翔击碎奎隆队",
+          "total": 8411.3,
+          "endings": ["紧急授课", "朝竭", "圣域", "别无所求"],
+          "members": [
+            { "name": "Ayanami", "role": "祖医美愿", "score": 1981 },
+            { "name": "哀珐迩尔的骨笔", "role": "蓝图死仇", "score": 2036 },
+            { "name": "落叶解三秋", "role": "木特美愿", "score": 2277 },
+            { "name": "团队位", "role": "近锋皇冠", "score": 1321 }
+          ]
+        },
+        {
+          "rank": 4,
+          "name": "Ciallo猫懿锣队",
+          "total": 6184.6,
+          "endings": ["紧急授课", "圣域"],
+          "members": [
+            { "name": "Pλn!!", "role": "祖医死仇", "score": 2128 },
+            { "name": "7929", "role": "木特死仇", "score": 1387 },
+            { "name": "倒春仰寒", "role": "近锋美愿", "score": 517 },
+            { "name": "团队位", "role": "蓝图美愿", "score": 1502 }
+          ]
+        }
+      ]
+    },
+    {
+      "index": 2,
+      "name": "大啥杯 #2",
+      "date": "2026-06-09",
+      "format": "小队赛 · 四条赛道各占一人",
+      "shot": "assets/cups/cup2-team-scores.png",
+      "teams": [
+        {
+          "rank": 1,
+          "name": "冠军厨小队",
+          "total": 11477,
+          "endings": ["认知即重担", "虚无不俱", "时光之沙", "朝竭", "圣域", "不容拒绝", "别无所求"],
+          "members": [
+            { "lane": "水月与深蓝之树", "name": "激什戴尔", "role": "心胜维开", "score": 2260 },
+            { "lane": "探索者的根松止境", "name": "冷依w", "role": "木特新能开", "score": 3148, "memberRef": "lengyiw" },
+            { "lane": "萨卡兹的无终奇语", "name": "归化方人迦", "role": "点刺死仇新能开", "score": 3408 },
+            { "lane": "倪影与猩红孤钻", "name": "啊噗嚕苹果香蕉派", "role": "木特新能开", "score": 2311 }
+          ]
+        },
+        {
+          "rank": 2,
+          "name": "不会为时代儿队",
+          "total": 10728,
+          "endings": ["命运的宠儿", "深寒造像", "迈入永恒", "别无所求"],
+          "members": [
+            { "lane": "水月与深蓝之树", "name": "静谧的星之森", "role": "人本新能开", "score": 2303 },
+            { "lane": "探索者的根松止境", "name": "Jiu.", "role": "科学新能开", "score": 3605 },
+            { "lane": "萨卡兹的无终奇语", "name": "那一天的松鼠，掉构想求~~", "role": "拟态死仇新能开", "score": 2058 },
+            { "lane": "倪影与猩红孤钻", "name": "ihtw", "role": "祖医谜迭香岳", "score": 2562 }
+          ]
+        },
+        {
+          "rank": 3,
+          "name": "甜品咕SP+1队",
+          "total": 9701,
+          "endings": ["深寒造像", "时光之沙", "朝竭", "别无所求"],
+          "members": [
+            { "lane": "水月与深蓝之树", "name": "咕咕嘎嘎", "role": "心胜维开", "score": 1376 },
+            { "lane": "探索者的根松止境", "name": "px", "role": "科学新能开", "score": 3475 },
+            { "lane": "萨卡兹的无终奇语", "name": "Sunriser05", "role": "神人美愿", "score": 2325 },
+            { "lane": "倪影与猩红孤钻", "name": "比起大锁更爱吃甜品的教宗阁下", "role": "木特水月开", "score": 2157 }
+          ]
+        }
+      ]
+    }
+  ]
+}

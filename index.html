@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>大啥杯 DA SHA CUP · 明日方舟集成战略民间赛事记录站</title>
+<meta name="description" content="大啥杯（DA SHA CUP）——《明日方舟》集成战略（肉鸽）民间自办赛事的成绩记录与选手名片留存站。两届赛事、七支队伍、全部选手名片可检索。">
+<meta name="theme-color" content="#0a0c10">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%230a0c10'/%3E%3Cpath d='M5 6h22v4H5z' fill='%23e8a33d'/%3E%3Cpath d='M9 14h4v4H9zM19 14h4v4h-4z' fill='%234fc3d9'/%3E%3Cpath d='M6 22h20v4H6z' fill='%23c8443c'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<!-- ============================= 顶部导航 ============================= -->
+<header class="nav" id="siteNav">
+  <div class="nav-inner">
+    <a class="brand" href="#hero" aria-label="回到顶部">
+      <span class="brand-cut" aria-hidden="true"></span>
+      <span class="brand-cn">大啥杯</span>
+      <span class="brand-en">DA SHA CUP</span>
+    </a>
+    <nav class="nav-links" aria-label="页面导航">
+      <a href="#about">关于赛事<span>ABOUT</span></a>
+      <a href="#results">历届战报<span>RESULTS</span></a>
+      <a href="#players">选手名录<span>PLAYERS</span></a>
+      <a href="#stats">数据面板<span>STATS</span></a>
+    </nav>
+    <span class="nav-tag mono" id="navTag">PRTS // REC</span>
+  </div>
+  <div class="nav-scan" aria-hidden="true"></div>
+</header>
+
+<main>
+
+<!-- ============================= HERO 首屏 ============================= -->
+<section class="hero" id="hero">
+  <!-- 背景：成员名片暗化蒙版轮播（Ken Burns 缓慢缩放 + 交叉淡入），图片路径由 app.js 从数据注入 -->
+  <div class="hero-bg" id="heroBg" aria-hidden="true"></div>
+  <div class="hero-scrim" aria-hidden="true"></div>
+  <div class="hero-grid-lines" aria-hidden="true"></div>
+
+  <div class="wrap hero-inner">
+    <p class="eyebrow reveal">
+      <span class="dot" aria-hidden="true"></span>
+      非官方 · 民间自办 · 集成战略（肉鸽）
+    </p>
+
+    <h1 class="hero-title reveal">
+      <span class="cn">大啥杯</span>
+      <span class="en">DA SHA CUP</span>
+    </h1>
+
+    <p class="hero-slogan reveal">
+      肉鸽没有终点，只有下一次开局。<br>
+      <span class="dim">开局有风险，出货需谨慎；这里只负责把每一把都记下来。</span>
+    </p>
+
+    <!-- 三个数据块：由数据实时统计（app.js 计算），不写死 -->
+    <div class="hero-stats reveal" id="heroStats" aria-label="站点数据概览"></div>
+
+    <p class="hero-quote reveal">
+      <span class="qmark" aria-hidden="true">//</span>
+      <span id="heroQuote">此处并无正义，唯有前路。</span>
+    </p>
+  </div>
+
+  <a class="scroll-cue" href="#about" aria-label="向下滚动到关于赛事">
+    <span class="cue-arrow" aria-hidden="true"></span>
+    <span class="cue-text mono">SCROLL</span>
+  </a>
+</section>
+
+<!-- ============================= 关于赛事 ============================= -->
+<section class="section" id="about">
+  <div class="wrap">
+    <header class="sec-head reveal">
+      <p class="sec-kicker mono">01 // ABOUT</p>
+      <h2 class="sec-title">关于赛事<span class="sec-title-en">WHAT IS DA SHA CUP</span></h2>
+      <p class="sec-lead">
+        大啥杯是一场由玩家自发攒起来的《明日方舟》集成战略（俗称肉鸽）赛事。
+        没有赞助，没有奖金，没有解说台，只有一群想看看自己这一手构筑能打到哪儿去的人。
+      </p>
+    </header>
+
+    <div class="about-grid">
+      <article class="panel about-origin reveal">
+        <h3 class="panel-title">赛事起源<span class="en">ORIGIN</span></h3>
+        <p class="body-text">
+          从“谁的一把更离谱”这句争论开始，慢慢变成了一场有赛制、有赛程、有结算表的比赛。
+          第一届开赛时大家还在群里对分，第二届已经开始拿着截图排队交名片了。
+        </p>
+        <p class="body-text dim">
+          下面这些字段我们不敢替组织者编，先留成占位，拿到信息后直接改写本段 HTML 即可：
+        </p>
+        <dl class="tbd-list">
+          <!-- 待补充：直接改写这里（把 span.tbd 换成真实内容即可，样式自动适配） -->
+          <div><dt>赛事发起人</dt><dd><span class="tbd" data-field="赛事发起人">待补充</span></dd></div>
+          <div><dt>首届开赛日期</dt><dd><span class="tbd" data-field="首届开赛日期">待补充</span></dd></div>
+          <div><dt>赛事群 / 报名方式</dt><dd><span class="tbd" data-field="赛事群 / 报名方式">待补充</span></dd></div>
+          <div><dt>举办频率</dt><dd><span class="tbd" data-field="举办频率">待补充</span></dd></div>
+          <div><dt>计分与判定规则</dt><dd><span class="tbd" data-field="计分与判定规则">待补充</span></dd></div>
+        </dl>
+      </article>
+
+      <article class="panel about-how reveal">
+        <h3 class="panel-title">怎么打<span class="en">HOW IT WORKS</span></h3>
+        <ol class="steps">
+          <li>
+            <span class="step-no mono">01</span>
+            <div>
+              <p class="step-t">选剧本 / 选赛道<span class="en">PICK A SCRIPT</span></p>
+              <p class="step-d">一届一个剧本，或者一届四条赛道各占一人，规则看当届赛制。</p>
+            </div>
+          </li>
+          <li>
+            <span class="step-no mono">02</span>
+            <div>
+              <p class="step-t">摊开构筑<span class="en">BUILD</span></p>
+              <p class="step-d">分队、干员、开局流派全部摊在明面上，构筑标签就是你的名字。</p>
+            </div>
+          </li>
+          <li>
+            <span class="step-no mono">03</span>
+            <div>
+              <p class="step-t">开一把命运<span class="en">RUN IT</span></p>
+              <p class="step-d">打到哪儿算哪儿，翻车了也是记录的一部分——这句话是真的，不是安慰。</p>
+            </div>
+          </li>
+          <li>
+            <span class="step-no mono">04</span>
+            <div>
+              <p class="step-t">结算、交分、交名片<span class="en">SETTLE &amp; SUBMIT</span></p>
+              <p class="step-d">队伍总分 + 完成结局 + 个人名片截图，一起进档案。分数由当届组织者核定。</p>
+            </div>
+          </li>
+        </ol>
+        <p class="note-tbd mono">详细规则文本：<span class="tbd" data-field="详细规则">待补充</span></p>
+      </article>
+    </div>
+
+    <!-- 两届赛制并列对比（内容来自 data/site-data.json 的 cups[].format） -->
+    <h3 class="sub-title reveal">赛制对比<span class="en">FORMATS SIDE BY SIDE</span></h3>
+    <div class="format-grid" id="formatGrid"></div>
+  </div>
+</section>
+
+<!-- ============================= 历届赛事 ============================= -->
+<section class="section section-alt" id="results">
+  <div class="wrap">
+    <header class="sec-head reveal">
+      <p class="sec-kicker mono">02 // RESULTS</p>
+      <h2 class="sec-title">历届战报<span class="sec-title-en">TOURNAMENT RECORDS</span></h2>
+      <p class="sec-lead">
+        每一届的完整结算：名次、队伍总分、每个位置的定位标签与个人分、打通的结局。
+        数字以截图与当届结算表为准，我们不修图、不转运、不解释翻车。
+      </p>
+    </header>
+
+    <!-- 届次切换 Tab：由 cups 数组驱动，新增一届自动多一个 Tab -->
+    <div class="cup-tabs" id="cupTabs" role="tablist" aria-label="选择届次"></div>
+
+    <div class="cup-panels" id="cupPanels">
+      <p class="loading mono">LOADING DATA…</p>
+    </div>
+
+    <!-- 横向对比：两届冠军总分对比条（数据由 app.js 注入） -->
+    <div class="panel compare reveal" id="comparePanel">
+      <h3 class="panel-title">届冠军横向对比<span class="en">CHAMPIONS HEAD TO HEAD</span></h3>
+      <div id="compareBars"></div>
+      <p class="compare-note mono" id="compareNote"></p>
+    </div>
+  </div>
+</section>
+
+<!-- ============================= 选手名录 ============================= -->
+<section class="section" id="players">
+  <div class="wrap">
+    <header class="sec-head reveal">
+      <p class="sec-kicker mono">03 // PLAYERS</p>
+      <h2 class="sec-title">选手名录<span class="sec-title-en">PLAYER INDEX</span></h2>
+      <p class="sec-lead">
+        所有人的个人名片原样留存。搜索框认昵称、编号、游戏 ID 和定位标签；
+        点开卡片可以看到大图与这位选手的全部参赛记录。
+      </p>
+    </header>
+
+    <div class="toolbar reveal">
+      <div class="search-box">
+        <label class="sr-only" for="playerSearch">搜索选手</label>
+        <span class="search-icon" aria-hidden="true">⌕</span>
+        <input id="playerSearch" type="search" autocomplete="off" spellcheck="false"
+               placeholder="搜索：昵称 / #编号 / ID / 定位标签（如 2233、冷依w、新能开）">
+        <button id="searchClear" class="search-clear" type="button" aria-label="清空搜索" hidden>✕</button>
+      </div>
+      <div class="filters" id="roleFilters" role="group" aria-label="按定位标签筛选"></div>
+    </div>
+
+    <p class="result-line mono" id="playerCount" role="status" aria-live="polite"></p>
+
+    <div class="player-grid" id="playerGrid"></div>
+    <p class="empty-tip" id="playerEmpty" hidden>没有匹配的选手。换个关键词，或者点“全部”重新开始。</p>
+  </div>
+</section>
+
+<!-- ============================= 统计 / 页脚 ============================= -->
+<section class="section section-alt" id="stats">
+  <div class="wrap">
+    <header class="sec-head reveal">
+      <p class="sec-kicker mono">04 // STATS</p>
+      <h2 class="sec-title">数据面板<span class="sec-title-en">NUMBERS &amp; ENDINGS</span></h2>
+      <p class="sec-lead">把两届的数字摊平了看：谁在抬轿子，谁在翻车，哪些结局属于人手一个。</p>
+    </header>
+
+    <div class="stat-strip" id="statStrip"></div>
+
+    <div class="panel cloud-panel reveal">
+      <h3 class="panel-title">结局词云<span class="en">ENDINGS CLOUD</span></h3>
+      <p class="panel-sub">字号 = 出现频次（多支队伍都打通的结局会更大）。</p>
+      <div class="word-cloud" id="endingsCloud"></div>
+    </div>
+
+    <div class="panel cloud-panel reveal">
+      <h3 class="panel-title">定位标签图鉴<span class="en">BUILD TAGS</span></h3>
+      <p class="panel-sub">赛事内的构筑 / 路线标签，按出现次数排序，原样保留。</p>
+      <div class="tag-cloud" id="roleCloud"></div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ============================= 页脚 ============================= -->
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <p class="footer-cn">大啥杯</p>
+        <p class="footer-en mono">DA SHA CUP // FAN-MADE TOURNAMENT ARCHIVE</p>
+      </div>
+      <blockquote class="footer-quote" id="footerQuote">
+        <p>“不想玩啦”</p>
+        <cite>——某位选手的个人签名</cite>
+      </blockquote>
+      <nav class="footer-nav" aria-label="页脚导航">
+        <a href="#about">关于赛事</a>
+        <a href="#results">历届战报</a>
+        <a href="#players">选手名录</a>
+        <a href="#stats">数据面板</a>
+        <a href="#hero">回到顶部</a>
+      </nav>
+    </div>
+
+    <div class="footer-meta">
+      <p><span class="meta-k">数据来源</span>选手自行提供的个人名片截图与队伍得分截图；站点数据以 <code class="mono">data/site-data.json</code> 为准，页面内置同内容兜底数据（FALLBACK_DATA），离线打开也能读。</p>
+      <p><span class="meta-k">关于分数</span>所有分数、ID、编号均照搬当届结算与截图，未做任何四舍五入之外的修饰。</p>
+      <p><span class="meta-k">免责声明</span>本站为民间爱好者作品，与鹰角网络（Hypergryph）无关，不代表官方立场。《明日方舟》《集成战略》及相关名称、素材版权归鹰角网络所有。</p>
+      <p class="footer-fine mono" id="footerFine"></p>
+    </div>
+  </div>
+  <div class="footer-scan" aria-hidden="true"></div>
+</footer>
+
+<!-- ============================= 灯箱（名片详情 / 成绩截图放大） ============================= -->
+<div class="lightbox" id="lightbox" hidden>
+  <div class="lb-mask" data-lb-close></div>
+  <div class="lb-panel" role="dialog" aria-modal="true" aria-labelledby="lbTitle">
+    <button class="lb-close" type="button" data-lb-close aria-label="关闭（Esc）">✕</button>
+    <div class="lb-media">
+      <div class="lb-stage">
+        <img class="lb-img" id="lbImg" alt="">
+        <button class="lb-nav lb-prev" type="button" id="lbPrev" aria-label="上一张（←）">‹</button>
+        <button class="lb-nav lb-next" type="button" id="lbNext" aria-label="下一张（→）">›</button>
+        <div class="lb-caption mono" id="lbCaption"></div>
+      </div>
+      <div class="lb-thumbs" id="lbThumbs"></div>
+    </div>
+    <div class="lb-side">
+      <p class="lb-kicker mono" id="lbKicker">PLAYER CARD</p>
+      <h3 class="lb-title" id="lbTitle">—</h3>
+      <div class="lb-info" id="lbInfo"></div>
+    </div>
+  </div>
+</div>
+
+<noscript>
+  <div class="noscript">本站需要 JavaScript 才能渲染赛事数据。请在浏览器中启用 JavaScript 后刷新。</div>
+</noscript>
+
+<script src="app.js"></script>
+</body>
+</html>
