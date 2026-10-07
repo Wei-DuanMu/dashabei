@@ -159,6 +159,12 @@ code{font-family:var(--font-mono);font-size:.92em;color:var(--cyan)}
 .sec-title-en{font-family:var(--font-mono);font-size:clamp(11px,1.05vw,14px);letter-spacing:.22em;color:var(--tx-3);text-transform:uppercase;font-weight:500;margin-left:.7em;align-self:center}
 .sec-title::before{content:"◢";color:var(--amber);font-size:.5em;margin-right:.5em;transform:translateY(-.35em)}
 .sec-lead{color:var(--tx-2);margin-top:14px;max-width:72ch}
+/* 区块下的小字概览（数据由 app.js 实时统计后填入） */
+.sec-note{color:var(--tx-3);font-size:12px;letter-spacing:.08em;margin-top:10px}
+/* 发起人名字：点击直达对应选手名片（无 JS 时退化为跳到选手名录） */
+.founder-link{color:var(--cyan);font-weight:700;border-bottom:1px dashed rgba(79,195,217,.5);transition:color .3s ease,border-color .3s ease}
+.founder-link:hover{color:var(--gold);border-color:var(--gold)}
+.founder-link::after{content:"◢";font-size:.6em;margin-left:.3em;color:var(--tx-3);vertical-align:super}
 
 /* ============================ 3. 导航 ============================ */
 .nav{position:fixed;top:0;left:0;right:0;z-index:60;backdrop-filter:blur(10px);background:rgba(10,12,16,.72);border-bottom:1px solid var(--line-2);transition:background .3s ease,box-shadow .3s ease}

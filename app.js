@@ -1131,6 +1131,29 @@ function renderPlayers(ctx) {
   });
 }
 
+/** 「关于赛事」里发起人的名字：点击直接打开对应选手的名片灯箱。
+ *  HTML 写的是 href="#players" 的链接，所以没有 JS 时会退化成跳到选手名录，不会是死链。 */
+function initMemberLinks(ctx) {
+  $$('[data-member-link]').forEach(el => {
+    el.addEventListener('click', ev => {
+      const id = el.getAttribute('data-member-link');
+      if (!ctx.byId[id]) return;
+      ev.preventDefault();
+      openMemberLightbox(ctx, id);
+    });
+  });
+}
+
+/** 历届战报的档案概览小字：全部由 cups 数据实时统计 */
+function renderResultsNote(ctx) {
+  const host = $('#resultsNote');
+  if (!host) return;
+  const s = ctx.stats;
+  host.textContent = 'ARCHIVE // 档案目前收录 ' + s.cupCount + ' 届 · ' + s.teamCount + ' 支队伍 · ' +
+    s.entryCount + ' 条个人成绩 · ' + Object.keys(s.endings).length + ' 种结局 · ' +
+    Object.keys(s.roleCount).length + ' 种定位标签';
+}
+
 /* ========================== 11. 灯箱 ========================== */
 const lb = { images: [], index: 0, opener: null };
 
@@ -1370,8 +1393,10 @@ function fatal(message) {
   renderCompare(ctx);
   renderPlayers(ctx);
   renderStats(ctx);
+  renderResultsNote(ctx);
   renderFooter(ctx);
   initLightbox();
+  initMemberLinks(ctx);
   initNav();
   observeAll(document);
   document.documentElement.setAttribute('data-app-ready', '1');

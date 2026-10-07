@@ -31,7 +31,8 @@ dashabei/                   ← 本仓库（线上目录）
 │  └─ cups/*.png            # 2 张杯赛队伍得分截图
 ├─ deploy/
 │  ├─ nginx-dashabei.conf   # 云服务器 nginx 站点配置样例
-│  └─ setup-ubuntu.sh       # 服务器初始化（装 nginx + 配站点，幂等）
+│  ├─ setup-ubuntu.sh       # 服务器初始化（装 nginx + 配站点，幂等）
+│  └─ enable-https.sh       # 域名解析后一键上 HTTPS（certbot + 80→443）
 └─ tools/
    ├─ inject-fallback.mjs   # 把 site-data.json 注入 app.js 的 FALLBACK_DATA（幂等）
    └─ deploy.ps1            # scp 一键上线 / 更新 + 远端权限修正（Windows 本地 → 服务器）
@@ -149,6 +150,10 @@ UI 会自动适配，**不需要改任何代码**：新 Tab、冠军横幅、名
 
 「怎么打」面板底部的「详细规则文本」同样是「以当期大啥杯比赛规则为准」。
 
+「赛事发起人」里的 **溦** 和 **冷依w** 是可点链接，点击直接打开对应选手的名片灯箱
+（HTML 里写成 `href="#players"` + `data-member-link="选手id"`，所以没有 JS 时会退化为跳到选手名录，不会变死链；
+新增发起人只要照抄这个格式，`data-member-link` 填 `members[].id`）。
+
 > 以后再有不确定、需要留白的字段，把那行写成 `<span class="tbd" data-field="字段名">待补充</span>`
 > 就会自动套上琥珀色虚线占位样式（`.tbd`，样式在 `styles.css` 里，规则说明小字用 `.note-rule`）。
 
@@ -234,7 +239,20 @@ powershell -File tools\deploy.ps1 -Server 47.242.90.95 -Target /var/www/dashabei
 2. **`scp -r` 从 Windows 上传的目录默认是 `drwx------`** —— nginx 的 `www-data` 进不去，
    `try_files` 会返回 404（现象：文件明明传上去了却打不开）。脚本第 3 步会统一 `chmod 755` 目录、`chmod 644` 文件。
 
-### 11.4 日常更新（一条龙）
+### 11.5 上 HTTPS（等域名解析生效后，一条命令）
+
+域名还在申请中。拿到域名后：先把 A 记录指向 `47.242.90.95`（阿里云安全组已放行 80/443），然后：
+
+```bash
+# 在服务器上执行（把脚本传上去：scp deploy/enable-https.sh root@47.242.90.95:/tmp/）
+sudo bash /tmp/enable-https.sh 你的域名.com 你的邮箱@example.com
+```
+
+脚本会：校验域名解析 → 把 nginx 的 `server_name _;` 改成你的域名 → 装 certbot →
+申请 Let's Encrypt 证书 → 自动改写为 443 并把 80 跳转到 443 → curl 自检 → 打印证书到期日与续期定时器。
+（不想填邮箱就去掉第二个参数。）完成后把本文档第 11.1 节的地址换成 `https://你的域名/`。
+
+### 11.6 日常更新（一条龙）
 
 ```bash
 # 1) 改数据：data/site-data.json（新增一届 / 新增名片，字段见第 3、5、6 节）

@@ -94,7 +94,7 @@
         </p>
         <!-- 组织者信息：直接改写下面 .tbd-list 里的文字即可；以后再有不确定的字段，写成 <span class="tbd" data-field="字段名">待补充</span> 就会自动套上琥珀色虚线占位样式 -->
         <dl class="tbd-list">
-          <div><dt>赛事发起人</dt><dd>溦 和 冷依w</dd></div>
+          <div><dt>赛事发起人</dt><dd><a class="founder-link" href="#players" data-member-link="shu" title="查看 溦 的名片">溦</a> 和 <a class="founder-link" href="#players" data-member-link="lengyiw" title="查看 冷依w 的名片">冷依w</a></dd></div>
           <div><dt>首届开赛日期</dt><dd>2023 年寒假</dd></div>
           <div><dt>赛事群 / 报名方式</dt><dd>大啥杯内部报名微信群</dd></div>
           <div><dt>举办频率</dt><dd>一年两到三次</dd></div>
@@ -154,6 +154,8 @@
         每一届的完整结算：名次、队伍总分、每个位置的定位标签与个人分、打通的结局。
         数字以截图与当届结算表为准，我们不修图、不转运、不解释翻车。
       </p>
+      <!-- 档案概览：条数由 app.js 按 cups 数组实时统计，新增届次后自动更新 -->
+      <p class="sec-note mono" id="resultsNote"></p>
     </header>
 
     <!-- 届次切换 Tab：由 cups 数组驱动，新增一届自动多一个 Tab -->
