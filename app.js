@@ -739,7 +739,7 @@ function renderHero(ctx) {
       le: s.memberCount + ' PLAYERS · ' + s.shotCount + ' CARDS · ' + scoreShots + ' SCORE SHOTS' }
   ];
   $('#heroStats').innerHTML = blocks.map(b => (
-    '<div class="hstat cut-tr">' +
+    '<div class="hstat">' +
       '<span class="n">' + esc(b.n) + '<small>' + esc(b.unit) + '</small></span>' +
       '<span class="l">' + esc(b.l) + '</span>' +
       '<span class="le mono">' + esc(b.le) + '</span>' +
@@ -765,7 +765,7 @@ function renderFormats(ctx) {
     const lanes = [];
     cup.teams.forEach(t => (t.members || []).forEach(m => { if (m.lane && lanes.indexOf(m.lane) < 0) lanes.push(m.lane); }));
     return '' +
-      '<article class="fmt ' + cls + ' cut reveal">' +
+      '<article class="fmt ' + cls + ' reveal">' +
         '<span class="fmt-no mono">CUP #' + esc(cup.index) + '</span>' +
         '<h4>' + esc(cup.name) + '</h4>' +
         '<p class="fmt-meta">' + esc(dash(cup.date)) + ' · ' + cup.teams.length + ' 支队伍</p>' +
@@ -787,7 +787,7 @@ function memberRowHTML(entry, maxScore, showLane) {
   const isTop = maxScore > 0 && score === maxScore;
   return '' +
     '<div class="mrow">' +
-      '<span class="chip chip-role cut-chip">' + esc(dash(entry.role)) + '</span>' +
+      '<span class="chip chip-role">' + esc(dash(entry.role)) + '</span>' +
       '<span class="m-name">' + esc(dash(entry.name)) +
         (showLane && entry.lane ? '<span class="m-lane mono">' + esc(entry.lane) + '</span>' : '') +
       '</span>' +
@@ -817,17 +817,17 @@ function teamCardHTML(team, cup) {
   )).join('');
 
   return '' +
-  '<article class="team-card cut' + rankCls + '" data-rank="' + rank + '">' +
+  '<article class="team-card' + rankCls + '" data-rank="' + rank + '">' +
     '<div class="tc-head" role="group">' +
-      '<div class="rank-badge' + (medal ? '' : ' cut-chip') + '">' +
+      '<div class="rank-badge">' +
         (medal ? '<span class="rb-medal">' + medal + '</span>' : '') +
         '<span class="rb-no">NO.' + rank + '</span>' +
       '</div>' +
       '<div class="tc-title">' +
-        '<h3 class="tc-name"><span class="rank-tag mono">RANK ' + String(rank).padStart(2, '0') + ' // ' + esc(cup.name) + '</span>' + esc(dash(team.name)) + '</h3>' +
+        '<h3 class="tc-name"><span class="rank-tag mono">RANK ' + String(rank).padStart(2, '0') + ' / ' + esc(cup.name) + '</span>' + esc(dash(team.name)) + '</h3>' +
         '<div class="tc-endings">' + (endings.length
-          ? endings.map((e, i) => '<span class="chip chip-end cut-chip" style="animation-delay:' + (i * 45) + 'ms">' + esc(e) + '</span>').join('')
-          : '<span class="chip cut-chip">结局记录 —</span>') + '</div>' +
+          ? endings.map((e, i) => '<span class="chip chip-end" style="animation-delay:' + (i * 45) + 'ms">' + esc(e) + '</span>').join('')
+          : '<span class="chip">结局记录 —</span>') + '</div>' +
       '</div>' +
       '<div class="tc-score">' +
         '<span class="tc-total">' + fmtNum(team.total) + '<small class="mono">TOTAL SCORE</small></span>' +
@@ -838,16 +838,16 @@ function teamCardHTML(team, cup) {
     '<div class="tc-detail">' +
       '<div class="detail-grid">' +
         '<div>' +
-          '<p class="detail-sub mono">OFFICIAL SCORE SHOT // 官方成绩截图</p>' +
+          '<p class="detail-sub mono">OFFICIAL SCORE SHOT / 官方成绩截图</p>' +
           (cup.shot
-            ? '<div class="shot-thumb cut-sm" data-shot="' + esc(cup.shot) + '" data-shot-label="' + esc(cup.name + ' · ' + team.name + ' 得分截图') + '" role="button" tabindex="0">' +
+            ? '<div class="shot-thumb" data-shot="' + esc(cup.shot) + '" data-shot-label="' + esc(cup.name + ' · ' + team.name + ' 得分截图') + '" role="button" tabindex="0">' +
                 '<img src="' + esc(cup.shot) + '" alt="' + esc(cup.name + ' ' + team.name + ' 官方队伍得分截图') + '" loading="lazy" decoding="async" data-initial="' + esc(firstChar(cup.name)) + '">' +
                 '<span class="zoom-hint">点击放大 ⤢</span>' +
               '</div>'
             : '<p class="dim">该届成绩截图 —</p>') +
         '</div>' +
         '<div>' +
-          '<p class="detail-sub mono">ROSTER // 队员明细</p>' +
+          '<p class="detail-sub mono">ROSTER / 队员明细</p>' +
           '<table class="dtable"><thead><tr>' + laneHead + '<th>定位</th><th>昵称</th><th style="text-align:right">个人分</th></tr></thead>' +
           '<tbody>' + (rows || '<tr><td colspan="4" class="dim">—</td></tr>') + '</tbody></table>' +
           '<p class="compare-note mono">队伍总分 ' + fmtNum(total) + ' · 个人分合计 ' + fmtNum(scores.reduce((a, b) => a + b, 0)) + ' · ' + scores.length + ' 个位置</p>' +
@@ -865,26 +865,46 @@ function renderCupPanel(ctx, cupIndex) {
   const totalTeams = cup.teams.length;
   const personalMax = cup.teams.reduce((max, t) => Math.max(max, ...(t.members || []).map(m => Number(m.score) || 0)), 0);
 
+  // 冠军区 = 第 1 名的正式条目（全宽锚点）。
+  // 榜单只列 NO.2 起的队伍 —— 否则同一支队伍会以「横幅 + 行」两种形态各出现一次，
+  // 形成两个等重锚点（focal-point 规则 1：一个视口只能有一个第一阅读点）。
+  const champMembers = champ ? (champ.members || []) : [];
+  const champMax = champMembers.length ? Math.max.apply(null, champMembers.map(m => Number(m.score) || 0)) : 0;
+  const champShowLane = champMembers.some(m => m.lane);
+  const champEndings = champ ? (champ.endings || []) : [];
+
   const championHTML = champ ? (
-    '<section class="champion cut" aria-label="本届冠军">' +
-      '<p class="crown mono"><span class="medal">🥇</span> CHAMPION // 本届冠军</p>' +
-      '<h3 class="cname">' + esc(dash(champ.name)) + '</h3>' +
-      '<div class="crow">' +
-        '<span class="ctotal">' + fmtNum(champ.total) + '<small>TOTAL</small></span>' +
-        '<span class="cmeta">' + esc(dash(cup.date)) + '<br>' + esc(dash(cup.format)) + '<br>' +
-          totalTeams + ' 支队伍 · 单届最高个人分 ' + fmtNum(personalMax) + '</span>' +
-        '<span class="cbtns">' +
-          (cup.shot ? '<button class="btn cut-btn" type="button" data-open-shot="' + esc(cup.shot) + '" data-shot-label="' + esc(cup.name + ' 官方队伍得分截图') + '">官方成绩截图 ⤢</button>' : '') +
-          '<button class="btn btn-cyan cut-btn" type="button" data-expand-all>展开全部队伍</button>' +
-        '</span>' +
+    '<section class="champion cut" aria-label="本届冠军（第 1 名）">' +
+      '<div class="champ-head">' +
+        '<div class="rank-badge">' +
+          '<span class="rb-medal">🥇</span>' +
+          '<span class="rb-no">NO.1</span>' +
+        '</div>' +
+        '<div class="champ-title">' +
+          '<p class="crown mono">RANK 01 / ' + esc(cup.name) + ' · CHAMPION</p>' +
+          '<h3 class="cname">' + esc(dash(champ.name)) + '</h3>' +
+          '<div class="tc-endings">' + (champEndings.length
+            ? champEndings.map(e => '<span class="chip chip-end">' + esc(e) + '</span>').join('')
+            : '<span class="chip">结局记录 —</span>') + '</div>' +
+        '</div>' +
+        '<div class="champ-score">' +
+          '<span class="ctotal">' + fmtNum(champ.total) + '<small>TOTAL</small></span>' +
+          '<span class="cmeta mono">' + esc(dash(cup.date)) + '<br>' + esc(dash(cup.format)) + '<br>' +
+            totalTeams + ' 支队伍 · 单届最高个人分 ' + fmtNum(personalMax) + '</span>' +
+          '<span class="cbtns">' +
+            (cup.shot ? '<button class="btn cut-btn" type="button" data-open-shot="' + esc(cup.shot) + '" data-shot-label="' + esc(cup.name + ' 官方队伍得分截图') + '">官方成绩截图 ⤢</button>' : '') +
+            '<button class="btn cut-btn" type="button" data-expand-all>展开全部队伍</button>' +
+          '</span>' +
+        '</div>' +
       '</div>' +
-      '<div class="tc-endings" style="margin-top:18px">' + (champ.endings || []).map(e =>
-        '<span class="chip chip-end cut-chip">' + esc(e) + '</span>').join('') + '</div>' +
+      '<div class="tc-members champ-roster">' +
+        (champMembers.map(m => memberRowHTML(m, champMax, champShowLane)).join('') || '<p class="dim">队员明细 —</p>') +
+      '</div>' +
     '</section>'
   ) : '';
 
   host.innerHTML = '<div class="cup-panel">' + championHTML +
-    '<div class="team-list">' + cup.teams.map(t => teamCardHTML(t, cup)).join('') + '</div>' +
+    '<div class="team-list">' + cup.teams.filter(t => Number(t.rank) !== 1).map(t => teamCardHTML(t, cup)).join('') + '</div>' +
   '</div>';
 
   // 名次卡片交互：点击头部 / “队伍详情”按钮展开；成绩截图可点开放大
@@ -1003,11 +1023,11 @@ function renderCompare(ctx) {
 /* ========================== 10. 选手名录 ========================== */
 function playerCardHTML(m) {
   const tags = m.roles.length
-    ? m.roles.map(r => '<span class="chip chip-role cut-chip">' + esc(r) + '</span>').join('')
-    : '<span class="chip cut-chip">未参赛</span>';
+    ? m.roles.map(r => '<span class="chip chip-role">' + esc(r) + '</span>').join('')
+    : '<span class="chip">未参赛</span>';
   const sig = m.signature ? '“' + esc(m.signature) + '”' : '—';
   return '' +
-  '<article class="pcard cut" data-member="' + esc(m.id) + '" tabindex="0" role="button" ' +
+  '<article class="pcard" data-member="' + esc(m.id) + '" tabindex="0" role="button" ' +
     'aria-label="' + esc(m.name) + ' 的名片，共 ' + m.shots.length + ' 张截图，回车查看详情">' +
     '<div class="pcard-media">' +
       '<img src="' + esc(m.primaryShot) + '" alt="' + esc(m.name) + ' 的个人名片截图" ' +
@@ -1150,7 +1170,7 @@ function renderResultsNote(ctx) {
   const host = $('#resultsNote');
   if (!host) return;
   const s = ctx.stats;
-  host.textContent = 'ARCHIVE // 档案目前收录 ' + s.cupCount + ' 届 · ' + s.teamCount + ' 支队伍 · ' +
+  host.textContent = 'ARCHIVE / 档案目前收录 ' + s.cupCount + ' 届 · ' + s.teamCount + ' 支队伍 · ' +
     s.entryCount + ' 条个人成绩 · ' + Object.keys(s.endings).length + ' 种结局 · ' +
     Object.keys(s.roleCount).length + ' 种定位标签';
 }
@@ -1218,7 +1238,7 @@ function memberInfoHTML(m) {
     : '—';
   const records = m.records.length
     ? m.records.map(r => (
-        '<div class="lb-rec cut-chip">' +
+        '<div class="lb-rec">' +
           '<div class="r1"><span class="rn">' + esc(r.cupName) + ' · ' + esc(r.teamName) +
             ' <span class="dim">（第 ' + esc(r.teamRank) + ' 名）</span></span>' +
             '<span class="rs">' + fmtNum(r.score) + '</span></div>' +
@@ -1262,7 +1282,7 @@ function openMemberLightbox(ctx, id) {
   openLightbox({
     images: images,
     index: 0,
-    kicker: 'PLAYER CARD // 选手名片',
+    kicker: 'PLAYER CARD / 选手名片',
     title: m.name + ' ' + dash(m.code),
     infoHTML: memberInfoHTML(m)
   });
@@ -1294,21 +1314,33 @@ function initLightbox() {
 /* ========================== 12. 统计 / 页脚 ========================== */
 function renderStats(ctx) {
   const s = ctx.stats;
-  const cards = [
-    { v: s.teamCount, l: '累计队伍数', le: 'TOTAL TEAMS', d: s.cupCount + ' 届赛事 · 平均 ' + (s.cupCount ? (s.teamCount / s.cupCount).toFixed(1) : '—') + ' 支/届' },
-    { v: fmtNum(s.totalSum), l: '总分总和', le: 'SUM OF TOTALS', d: '两届所有队伍总分相加' },
-    { v: fmtNum(s.maxTeam), l: '最高单队分', le: 'TOP TEAM', d: '由冠军队伍拿下' },
-    { v: fmtNum(s.maxPersonal), l: '单届最高个人分', le: 'TOP PLAYER', d: '单届个人结算最高值' },
-    { v: fmtNum(Math.round(s.avgTeam * 10) / 10), l: '队伍平均分', le: 'AVG PER TEAM', d: '总分总和 ÷ 队伍数' }
+  // 组合：一个锚点读数器（最高单队分）+ 四条支撑台账。
+  // 原来是 5 张等重卡片 —— 五个等权区块会让页面失去第一阅读点（focal-point 规则 3）。
+  let champTeam = null;
+  ctx.cups.forEach(cup => cup.teams.forEach(t => {
+    if (!champTeam || Number(t.total) > Number(champTeam.team.total)) champTeam = { team: t, cup: cup };
+  }));
+  const ledger = [
+    { k: '累计队伍数', v: s.teamCount, d: s.cupCount + ' 届赛事 · 平均 ' + (s.cupCount ? (s.teamCount / s.cupCount).toFixed(1) : '—') + ' 支/届' },
+    { k: '总分总和', v: fmtNum(s.totalSum), d: '所有队伍总分相加' },
+    { k: '单届最高个人分', v: fmtNum(s.maxPersonal), d: '单届个人结算最高值' },
+    { k: '队伍平均分', v: fmtNum(Math.round(s.avgTeam * 10) / 10), d: '总分总和 ÷ 队伍数' }
   ];
-  $('#statStrip').innerHTML = cards.map(c => (
-    '<div class="scard cut-tr reveal">' +
-      '<span class="sv">' + esc(c.v) + '</span>' +
-      '<span class="sl">' + esc(c.l) + '</span>' +
-      '<span class="sle mono">' + esc(c.le) + '</span>' +
-      '<span class="sd">' + esc(c.d) + '</span>' +
-    '</div>'
-  )).join('');
+  $('#statStrip').innerHTML =
+    '<div class="stat-anchor reveal">' +
+      '<p class="sa-label">最高单队分 / TOP TEAM SCORE</p>' +
+      '<p class="sa-num">' + esc(fmtNum(s.maxTeam)) + '</p>' +
+      '<p class="sa-qual">' + esc(champTeam ? champTeam.team.name + ' · ' + champTeam.cup.name + ' · ' + champTeam.cup.date : '—') + '</p>' +
+    '</div>' +
+    '<div class="stat-ledger reveal">' +
+      ledger.map(r => (
+        '<div class="ledger-row">' +
+          '<span class="k">' + esc(r.k) + '</span>' +
+          '<span class="v">' + esc(r.v) + '</span>' +
+          '<span class="d">' + esc(r.d) + '</span>' +
+        '</div>'
+      )).join('') +
+    '</div>';
 
   // 结局词云：字号 = 频次
   const ends = Object.keys(s.endings).map(k => ({ t: k, f: s.endings[k] })).sort((a, b) => b.f - a.f || a.t.localeCompare(b.t));
@@ -1316,14 +1348,14 @@ function renderStats(ctx) {
   const minF = ends.length ? ends[ends.length - 1].f : 1;
   $('#endingsCloud').innerHTML = ends.length ? ends.map(e => {
     const size = maxF === minF ? 22 : 14 + (e.f - minF) / (maxF - minF) * 30;
-    return '<span class="wc-item cut-chip" style="font-size:' + size.toFixed(1) + 'px" title="' + esc(e.t) + '：' + e.f + ' 次">' +
+    return '<span class="wc-item" style="font-size:' + size.toFixed(1) + 'px" title="' + esc(e.t) + '：' + e.f + ' 次">' +
       esc(e.t) + '<span class="wc-n">×' + e.f + '</span></span>';
   }).join('') : '<p class="dim">暂无结局数据。</p>';
 
   // 定位标签图鉴
   const roles = Object.keys(s.roleCount).map(k => ({ t: k, f: s.roleCount[k] })).sort((a, b) => b.f - a.f || a.t.localeCompare(b.t));
   $('#roleCloud').innerHTML = roles.length ? roles.map(r =>
-    '<span class="chip chip-role cut-chip">' + esc(r.t) + ' <span class="mono" style="opacity:.7">×' + r.f + '</span></span>'
+    '<span class="chip chip-role">' + esc(r.t) + ' <span class="mono" style="opacity:.7">×' + r.f + '</span></span>'
   ).join('') : '<p class="dim">暂无定位标签数据。</p>';
 }
 
@@ -1337,7 +1369,7 @@ function renderFooter(ctx) {
   $('#footerFine').textContent = 'SITE v' + (ctx.site.version || '1.0.0') +
     ' · ' + s.cupCount + ' CUPS · ' + s.teamCount + ' TEAMS · ' + s.shotCount + ' CARDS · ' + s.entryCount + ' SCORE ENTRIES' +
     ' · ' + (ctx.site.tagline || '');
-  $('#navTag').textContent = 'PRTS // ' + s.cupCount + ' CUPS';
+  $('#navTag').textContent = 'PRTS · ' + s.cupCount + ' CUPS · ' + s.teamCount + ' TEAMS';
   document.title = (ctx.site.name || '大啥杯') + ' ' + (ctx.site.subtitle || '') + ' · 集成战略民间赛事记录站';
 }
 
