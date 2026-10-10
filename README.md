@@ -44,7 +44,8 @@ dashabei/                   ← 本仓库（线上目录）
 | --- | --- |
 | 双击 `index.html` | 直接可用。`file://` 下浏览器禁止 `fetch` 本地文件，页面会自动使用 `app.js` 顶部的 `FALLBACK_DATA`，功能完全一致，且不会产生控制台报错 |
 | 本地静态服务器（可选） | 在仓库根目录执行 `python -m http.server 8000`，访问 `http://localhost:8000/`，此时会真正读取 `data/site-data.json` |
-| 线上 | 云服务器：<http://47.242.90.95/>；GitHub Pages 备用：<https://wei-duanmu.github.io/dashabei/>（详见第 11 节） |
+| 线上（主站） | **<https://dashacup.asia/>** —— 阿里云服务器 + Let's Encrypt，`www` 同样覆盖，`http` 自动 301 跳 `https` |
+| 线上（备用） | GitHub Pages：<https://wei-duanmu.github.io/dashabei/>；直连 IP：<http://47.242.90.95/>（会跳转到域名） |
 
 两条路径的数据内容必须一致 —— `tools/inject-fallback.mjs` 就是干这个的（见第 4 节）。
 
@@ -205,7 +206,9 @@ UI 会自动适配，**不需要改任何代码**：新 Tab、冠军横幅、名
 
 | 入口 | 地址 | 说明 |
 | --- | --- | --- |
-| 云服务器（主） | <http://47.242.90.95/> | 阿里云香港 · Ubuntu 22.04 · nginx 1.18 · 站点目录 `/var/www/dashabei` |
+| **主站（HTTPS）** | **<https://dashacup.asia/>** | 阿里云香港 · Ubuntu 22.04 · nginx 1.18 · Let's Encrypt 证书（自动续期）· 站点目录 `/var/www/dashabei` |
+| 主站（www） | <https://www.dashacup.asia/> | 同一张证书覆盖，与主域名等价 |
+| 直连 IP（备用） | <http://47.242.90.95/> | 80 端口会 301 跳转到域名；域名出问题时可用 IP 排查 |
 | GitHub 仓库 | <https://github.com/Wei-DuanMu/dashabei> | 代码托管（public） |
 | GitHub Pages（备用） | <https://wei-duanmu.github.io/dashabei/> | 分支 `main` 根目录，`.nojekyll` 已就位，`git push` 后 1 分钟内自动重建 |
 
@@ -222,8 +225,9 @@ bash setup-ubuntu.sh
 写 `/etc/nginx/sites-available/dashabei`（作为 80 的 `default_server`，所以**用 IP 也能直接访问**）→
 关掉发行版默认站点 → 放行 ufw 的 80/443（如启用）→ `nginx -t` 校验并启动 → 本机 curl 自检。
 
-> 有域名后：把配置里的 `server_name _;` 改成域名，再执行
-> `sudo apt install -y certbot python3-certbot-nginx && sudo certbot --nginx -d 你的域名` 即可上 HTTPS。
+> 域名已就位：`dashacup.asia` + `www.dashacup.asia` 已签 Let's Encrypt 证书（80 强制跳 443），
+> 续期由 certbot 的 systemd timer 自动完成（`systemctl list-timers 'certbot*'` 可查）。
+> 换域名或加子域时执行：`sudo bash deploy/enable-https.sh <主域名> <邮箱> <额外域名...>`。
 
 ### 11.3 上传 / 更新站点文件
 
