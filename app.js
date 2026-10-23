@@ -716,15 +716,25 @@ function renderHero(ctx) {
   )).join('');
 
   const imgs = $$('img', bg);
+  // 标本框说明：轮播到谁，就标谁的真实归属（图源可追溯，不写装饰性假标注）
+  const cap = $('#heroArtCap');
+  const total = String(ctx.members.length).padStart(2, '0');
+  const capHTML = picks.map((m, i) => (
+    '<span><b>SPECIMEN ' + String(i + 1).padStart(2, '0') + ' / ' + total + '</b></span>' +
+    '<span>' + esc(m.name) + ' ' + esc(dash(m.code)) + ' · ID ' + esc(dash(m.gameId)) + '</span>'
+  ));
+  const setCap = i => { if (cap) cap.innerHTML = capHTML[i] || ''; };
   if (imgs.length) {
     let idx = 0;
     imgs[0].classList.add('on');
+    setCap(0);
     // Ken Burns 轮播：每 7s 交叉淡入下一张（reduced-motion 时完全不动）
     if (!reducedMotion && imgs.length > 1) {
       setInterval(() => {
         imgs[idx].classList.remove('on');
         idx = (idx + 1) % imgs.length;
         imgs[idx].classList.add('on');
+        setCap(idx);
       }, 7000);
     }
   }
@@ -735,8 +745,8 @@ function renderHero(ctx) {
   const blocks = [
     { n: s.cupCount, unit: '届', l: '已收录赛事', le: 'CUPS' },
     { n: s.teamCount, unit: '支', l: '参赛队伍', le: 'TEAMS' },
-    { n: s.shotCount, unit: '张', l: '名片留存',
-      le: s.memberCount + ' PLAYERS · ' + s.shotCount + ' CARDS · ' + scoreShots + ' SCORE SHOTS' }
+    { n: s.shotCount + scoreShots, unit: '张', l: '图像留存',
+      le: s.shotCount + ' CARDS · ' + scoreShots + ' SCORE SHOTS' }
   ];
   $('#heroStats').innerHTML = blocks.map(b => (
     '<div class="hstat">' +
@@ -750,6 +760,25 @@ function renderHero(ctx) {
   const sigs = ctx.members.map(m => ({ name: m.name, sig: m.signature })).filter(x => x.sig);
   const heroSig = sigs.slice().sort((a, b) => b.sig.length - a.sig.length)[0];
   if (heroSig) $('#heroQuote').textContent = '“' + heroSig.sig + '”　—— ' + heroSig.name;
+}
+
+/* 发起人名片条：按姓名从 members 里取真实名片（不写死图片路径），
+   链接交由 initMemberLinks 复用名片灯箱。改发起人只需改 ORGS 里的名字。 */
+const ORGS = ['溦', '冷依w'];
+
+function renderOrgs(ctx) {
+  const host = $('#orgsGrid');
+  if (!host) return;
+  const picked = ORGS.map(n => ctx.members.find(m => m.name === n)).filter(Boolean);
+  host.innerHTML = picked.map((m, i) => (
+    '<a class="org-card" href="#players" data-member-link="' + esc(m.id) + '" aria-label="查看 ' + esc(m.name) + ' 的名片">' +
+      '<span class="org-shot"><img src="' + esc(m.primaryShot || m.shot || '') + '" alt="' + esc(m.name) + ' 的名片截图" ' +
+        'loading="lazy" decoding="async" data-initial="' + esc(firstChar(m.name)) + '"></span>' +
+      '<span class="org-cap"><span class="org-name">' + esc(m.name) + '</span>' +
+        '<span class="org-code mono">' + esc(dash(m.code)) + '</span>' +
+        '<span class="org-tag">ORGANIZER 0' + (i + 1) + '</span></span>' +
+    '</a>'
+  )).join('');
 }
 
 /* ========================== 8. 关于赛事 ========================== */
@@ -821,7 +850,7 @@ function teamCardHTML(team, cup) {
     '<div class="tc-head" role="group">' +
       '<div class="rank-badge">' +
         (medal ? '<span class="rb-medal">' + medal + '</span>' : '') +
-        '<span class="rb-no">NO.' + rank + '</span>' +
+        '<span class="rb-num">' + String(rank).padStart(2, '0') + '</span>' +
       '</div>' +
       '<div class="tc-title">' +
         '<h3 class="tc-name"><span class="rank-tag mono">RANK ' + String(rank).padStart(2, '0') + ' / ' + esc(cup.name) + '</span>' + esc(dash(team.name)) + '</h3>' +
@@ -878,7 +907,7 @@ function renderCupPanel(ctx, cupIndex) {
       '<div class="champ-head">' +
         '<div class="rank-badge">' +
           '<span class="rb-medal">🥇</span>' +
-          '<span class="rb-no">NO.1</span>' +
+          '<span class="rb-num">01</span>' +
         '</div>' +
         '<div class="champ-title">' +
           '<p class="crown mono">RANK 01 / ' + esc(cup.name) + ' · CHAMPION</p>' +
@@ -994,11 +1023,16 @@ function renderCompare(ctx) {
   const champs = ctx.cups.map(cup => ({ cup: cup, team: cup.teams.find(t => Number(t.rank) === 1) })).filter(x => x.team);
   const max = champs.reduce((m, x) => Math.max(m, Number(x.team.total) || 0), 0) || 1;
   host.innerHTML = champs.map((x, i) => {
-    const pct = Math.max(2, Math.round((Number(x.team.total) || 0) / max * 100));
+    const total = Number(x.team.total) || 0;
+    const pct = Math.max(2, Math.round(total / max * 100));
+    // 落后第一名的部分在轨上画一条测距线（1px），把「分差」变成看得见的长度
+    const gap = pct < 100
+      ? '<span class="cbar-gap" style="left:' + pct + '%" aria-hidden="true"></span>'
+      : '';
     return '<div class="cbar-row">' +
       '<span class="cbar-label">' + esc(x.team.name) + '<span class="en">' + esc(x.cup.name) + ' · ' + esc(dash(x.cup.date)) + '</span></span>' +
-      '<span class="cbar-track" data-w="' + pct + '"><i class="c' + (i % 2 === 0 ? '1' : '2') + '"></i></span>' +
-      '<span class="cbar-val">' + fmtNum(x.team.total) + '</span>' +
+      '<span class="cbar-track" data-w="' + pct + '"><i class="c' + (i % 2 === 0 ? '1' : '2') + '"></i>' + gap + '</span>' +
+      '<span class="cbar-val">' + fmtNum(total) + '</span>' +
     '</div>';
   }).join('');
 
@@ -1421,6 +1455,7 @@ function fatal(message) {
   state.activeCup = ctx.cups[0].index;
   renderHero(ctx);
   renderFormats(ctx);
+  renderOrgs(ctx);
   renderCupTabs(ctx, state.activeCup);
   renderCupPanel(ctx, state.activeCup);
   renderCompare(ctx);
