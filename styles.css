@@ -422,16 +422,17 @@ code{font-family:var(--font-mono);font-size:.92em;color:var(--info)}
 
 /* ============================ 8. 数据面板 ============================ */
 /* 锚点读数器 + 支撑台账（取代 5 张等重卡片） */
-.stat-strip{display:grid;grid-template-columns:minmax(260px,.9fr) minmax(0,2.1fr);gap:var(--gap-8);align-items:start;margin-bottom:var(--gap-8)}
-.stat-anchor{border-top:2px solid var(--amber);padding-top:var(--gap-4)}
+.stat-strip{display:grid;grid-template-columns:minmax(260px,.9fr) minmax(0,2.1fr);gap:var(--gap-8);align-items:stretch;margin-bottom:var(--gap-8)}
+/* 锚点拉伸到台账高度，说明行落到底边 —— 数字在顶、出处底，上下两个锚点收住这一栏 */
+.stat-anchor{border-top:2px solid var(--amber);padding-top:var(--gap-4);display:flex;flex-direction:column}
 .stat-anchor .sa-label{font-family:var(--font-mono);font-size:11px;letter-spacing:.14em;color:var(--tx-3);margin:0 0 var(--gap-2)}
 .stat-anchor .sa-num{font-family:var(--font-mono);font-variant-numeric:tabular-nums;font-size:clamp(44px,5.2vw,72px);font-weight:600;color:var(--amber);line-height:1}
-.stat-anchor .sa-qual{font-size:13px;color:var(--tx-2);margin-top:var(--gap-3)}
+.stat-anchor .sa-qual{font-size:13px;color:var(--tx-2);margin-top:auto;padding-top:var(--gap-5);border-top:1px solid var(--line-2);align-self:stretch}
 .stat-ledger{border-top:1px solid var(--line)}
 .ledger-row{display:grid;grid-template-columns:minmax(110px,150px) auto minmax(0,1fr);gap:var(--gap-4);align-items:baseline;padding:var(--gap-3) 0;border-bottom:1px solid var(--line-2)}
 .ledger-row .k{color:var(--tx-3);font-size:13px}
 .ledger-row .v{font-family:var(--font-mono);font-variant-numeric:tabular-nums;font-size:clamp(18px,1.8vw,24px);font-weight:600;color:var(--tx);min-width:6ch}
-.ledger-row .d{color:var(--tx-2);font-size:12.5px}
+.ledger-row .d{color:var(--tx-2);font-size:12.5px;justify-self:end;text-align:right}
 .cloud-panel+.cloud-panel{margin-top:var(--gap-8)}
 .word-cloud{display:flex;flex-wrap:wrap;gap:var(--gap-2) var(--gap-4);align-items:baseline}
 .wc-item{display:inline-flex;align-items:baseline;gap:7px;padding:2px 0;border-bottom:1px solid var(--line-2);transition:color .25s ease,border-color .25s ease}
