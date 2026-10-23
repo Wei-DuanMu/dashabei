@@ -565,6 +565,11 @@ body.lb-open{overflow:hidden}
   .champ-score .cmeta{text-align:left}
   .champ-score .cbtns{justify-content:flex-start}
   .tc-total small{display:inline-block;margin:0 0 0 10px}
+  /* 冠军对比条：窄屏把轨道放到第二行占满，否则 50px 的短条读不出大小关系 */
+  .cbar-row{grid-template-columns:minmax(0,1fr) auto;row-gap:6px}
+  .cbar-label{grid-column:1;grid-row:1}
+  .cbar-val{grid-column:2;grid-row:1;justify-self:end}
+  .cbar-track{grid-column:1/-1;grid-row:2;margin-top:2px}
   .mrow{grid-template-columns:88px minmax(0,1fr) 72px;gap:var(--gap-2)}
   .mrow .bar{grid-column:1/-1;margin-top:6px}
   .footer-top{grid-template-columns:1fr}
