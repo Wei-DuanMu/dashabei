@@ -234,6 +234,25 @@ const FALLBACK_DATA = /*__FB_START__*/{
       "signature": "随风入夜，润物无声",
       "shot": "assets/members/11-shu-5895.jpg",
       "shotType": "card"
+    },
+    {
+      "id": "guihuafangrenjia",
+      "name": "归化方人迦",
+      "code": null,
+      "gameId": null,
+      "title": null,
+      "titleEn": null,
+      "operator": null,
+      "operatorEn": null,
+      "joinDate": null,
+      "birthday": null,
+      "theme": null,
+      "themeEn": null,
+      "outfitCount": null,
+      "recruitProgress": null,
+      "signature": null,
+      "shot": null,
+      "shotType": null
     }
   ],
   "cups": [
@@ -258,7 +277,8 @@ const FALLBACK_DATA = /*__FB_START__*/{
             {
               "name": "百川之海",
               "role": "高规格美愿",
-              "score": 1966
+              "score": 1966,
+              "memberRef": "jay"
             },
             {
               "name": "林锣绸缎",
@@ -266,9 +286,10 @@ const FALLBACK_DATA = /*__FB_START__*/{
               "score": 1560
             },
             {
-              "name": "先志",
+              "name": "圥忈",
               "role": "点刺死仇",
-              "score": 3527
+              "score": 3527,
+              "memberRef": "hanyushiqi"
             },
             {
               "name": "团队位",
@@ -296,7 +317,8 @@ const FALLBACK_DATA = /*__FB_START__*/{
             {
               "name": "Oblivionis",
               "role": "蓝图死仇",
-              "score": 3427
+              "score": 3427,
+              "memberRef": "yancheng"
             },
             {
               "name": "道安杨",
@@ -330,12 +352,14 @@ const FALLBACK_DATA = /*__FB_START__*/{
             {
               "name": "哀珐迩尔的骨笔",
               "role": "蓝图死仇",
-              "score": 2036
+              "score": 2036,
+              "memberRef": "guzhang"
             },
             {
               "name": "落叶解三秋",
               "role": "木特美愿",
-              "score": 2277
+              "score": 2277,
+              "memberRef": "qiongyang"
             },
             {
               "name": "团队位",
@@ -361,7 +385,8 @@ const FALLBACK_DATA = /*__FB_START__*/{
             {
               "name": "7929",
               "role": "木特死仇",
-              "score": 1387
+              "score": 1387,
+              "memberRef": "shanluan"
             },
             {
               "name": "倒春仰寒",
@@ -400,9 +425,10 @@ const FALLBACK_DATA = /*__FB_START__*/{
           "members": [
             {
               "lane": "水月与深蓝之树",
-              "name": "激什戴尔",
+              "name": "溦什戴尔",
               "role": "心胜维开",
-              "score": 2260
+              "score": 2260,
+              "memberRef": "shu"
             },
             {
               "lane": "探索者的根松止境",
@@ -415,13 +441,15 @@ const FALLBACK_DATA = /*__FB_START__*/{
               "lane": "萨卡兹的无终奇语",
               "name": "归化方人迦",
               "role": "点刺死仇新能开",
-              "score": 3408
+              "score": 3408,
+              "memberRef": "guihuafangrenjia"
             },
             {
               "lane": "倪影与猩红孤钻",
-              "name": "啊噗嚕苹果香蕉派",
+              "name": "啊噗噜派",
               "role": "木特新能开",
-              "score": 2311
+              "score": 2311,
+              "memberRef": "qiongyang"
             }
           ]
         },
@@ -438,21 +466,24 @@ const FALLBACK_DATA = /*__FB_START__*/{
           "members": [
             {
               "lane": "水月与深蓝之树",
-              "name": "静谧的星之森",
+              "name": "静谧的里之森林",
               "role": "人本新能开",
-              "score": 2303
+              "score": 2303,
+              "memberRef": "guzhang"
             },
             {
               "lane": "探索者的根松止境",
               "name": "Jiu.",
               "role": "科学新能开",
-              "score": 3605
+              "score": 3605,
+              "memberRef": "shanluan"
             },
             {
               "lane": "萨卡兹的无终奇语",
-              "name": "那一天的松鼠，掉构想求~~",
+              "name": "那一天的松鼠，掉构起来~",
               "role": "拟态死仇新能开",
-              "score": 2058
+              "score": 2058,
+              "memberRef": "shaoyafan"
             },
             {
               "lane": "倪影与猩红孤钻",
@@ -483,7 +514,8 @@ const FALLBACK_DATA = /*__FB_START__*/{
               "lane": "探索者的根松止境",
               "name": "px",
               "role": "科学新能开",
-              "score": 3475
+              "score": 3475,
+              "memberRef": "yancheng"
             },
             {
               "lane": "萨卡兹的无终奇语",
@@ -575,7 +607,8 @@ function prepare(raw) {
       byId[m.id] = merged;
       order.push(m.id);
     }
-    byId[m.id].shots.push({
+    // 名片图未提供（shot: null）时不要塞一张空图，否则会被算成"1 张截图"
+    if (m.shot) byId[m.id].shots.push({
       src: m.shot,
       type: m.shotType || 'card',
       order: i
@@ -604,6 +637,7 @@ function prepare(raw) {
           cupDate: cup.date,
           teamName: team.name,
           teamRank: team.rank,
+          alias: entry.name || null,
           role: entry.role || null,
           lane: entry.lane || null,
           score: entry.score == null ? null : Number(entry.score)
@@ -1060,18 +1094,28 @@ function playerCardHTML(m) {
     ? m.roles.map(r => '<span class="chip chip-role">' + esc(r) + '</span>').join('')
     : '<span class="chip">未参赛</span>';
   const sig = m.signature ? '“' + esc(m.signature) + '”' : '—';
-  return '' +
-  '<article class="pcard" data-member="' + esc(m.id) + '" tabindex="0" role="button" ' +
-    'aria-label="' + esc(m.name) + ' 的名片，共 ' + m.shots.length + ' 张截图，回车查看详情">' +
-    '<div class="pcard-media">' +
-      '<img src="' + esc(m.primaryShot) + '" alt="' + esc(m.name) + ' 的个人名片截图" ' +
+  // 名片图还没给（归化方人迦）：留占位块，卡片不变成可点按钮
+  const hasShot = !!m.primaryShot;
+  const aliasNames = (m.records || [])
+    .filter(r => r && r.alias && r.alias !== m.name)
+    .map(r => r.cupName.replace(/^大啥杯\s*/, '') + ' ' + r.alias);
+  const aliasLine = aliasNames.length
+    ? '<p class="pcard-id pcard-alias">其他 ID　' + esc(aliasNames.join('　/　')) + '</p>'
+    : '';
+  const media = hasShot
+    ? '<img src="' + esc(m.primaryShot) + '" alt="' + esc(m.name) + ' 的个人名片截图" ' +
         'loading="lazy" decoding="async" data-initial="' + esc(firstChar(m.name)) + '">' +
-      (m.shots.length > 1 ? '<span class="shot-count mono">' + m.shots.length + ' 张截图</span>' : '') +
-    '</div>' +
+      (m.shots.length > 1 ? '<span class="shot-count mono">' + m.shots.length + ' 张截图</span>' : '')
+    : '<span class="pcard-ph mono" aria-hidden="true">' + esc(firstChar(m.name)) + '<em>名片待补</em></span>';
+  return '' +
+  '<article class="pcard' + (hasShot ? ' is-openable' : '') + '" data-member="' + esc(m.id) + '"' +
+    (hasShot ? ' tabindex="0" role="button" aria-label="' + esc(m.name) + ' 的名片，共 ' + m.shots.length + ' 张截图，回车查看详情"' : ' aria-label="' + esc(m.name) + ' 的名片待补"') + '>' +
+    '<div class="pcard-media">' + media + '</div>' +
     '<div class="pcard-body">' +
       '<h3 class="pcard-name"><span>' + esc(dash(m.name)) + '</span><span class="pcard-code">' + esc(dash(m.code)) + '</span></h3>' +
       '<p class="pcard-sub">' + esc(dash(m.title)) + '<span class="dim">/</span>' + esc(dash(m.operator)) + '</p>' +
       '<div class="pcard-tags">' + tags + '</div>' +
+      aliasLine +
       '<p class="pcard-id">ID ' + esc(dash(m.gameId)) + ' · 参赛 ' + m.records.length + ' 次' +
         (m.records.length ? ' · 累计 ' + fmtNum(m.totalScore) + ' 分' : '') + '</p>' +
     '</div>' +
@@ -1282,9 +1326,15 @@ function memberInfoHTML(m) {
       )).join('')
     : '<p class="dim">这位选手暂未出现在已收录届次的队伍成绩中，名片先行留存。</p>';
 
+  const aliasText = (() => {
+    const list = (m.records || []).filter(r => r && r.alias && r.alias !== m.name);
+    if (!list.length) return null;
+    return list.map(r => esc(r.cupName) + '　' + esc(r.alias)).join(' <span class="dim">/</span> ');
+  })();
   return '' +
     '<table class="lb-table">' +
       row('昵称', esc(dash(m.name))) +
+      (aliasText ? row('参赛名', aliasText) : '') +
       row('编号', esc(dash(m.code))) +
       row('游戏 ID', '<span class="num">' + esc(dash(m.gameId)) + '</span>') +
       row('定位标签', m.roles.length ? m.roles.map(esc).join(' / ') : '—') +
@@ -1297,7 +1347,9 @@ function memberInfoHTML(m) {
       row('雇佣干员进度', '<span class="num">' + (m.recruitProgress == null ? '—' : esc(m.recruitProgress)) + '</span>') +
       row('参赛次数', '<span class="num">' + m.records.length + '</span> 次') +
       row('累计分', m.records.length ? '<span class="num">' + fmtNum(m.totalScore) + '</span>' : '—') +
-      row('名片截图', m.shots.length + ' 张（' + m.primaryShotType + ' 主图）') +
+      row('名片截图', m.shots.length
+        ? m.shots.length + ' 张（' + (m.primaryShotType === 'card' ? '个人名片页' : '战斗结算页') + ' 主图）'
+        : '待补（尚未提供名片）') +
     '</table>' +
     '<div class="lb-sec">' +
       '<p class="lb-sec-t mono"><span>参赛记录 // RECORDS</span><span>' + (m.records.length ? fmtNum(m.totalScore) + ' TOTAL' : '—') + '</span></p>' +

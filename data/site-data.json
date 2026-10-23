@@ -204,6 +204,25 @@
       "signature": "随风入夜，润物无声",
       "shot": "assets/members/11-shu-5895.jpg",
       "shotType": "card"
+    },
+    {
+      "id": "guihuafangrenjia",
+      "name": "归化方人迦",
+      "code": null,
+      "gameId": null,
+      "title": null,
+      "titleEn": null,
+      "operator": null,
+      "operatorEn": null,
+      "joinDate": null,
+      "birthday": null,
+      "theme": null,
+      "themeEn": null,
+      "outfitCount": null,
+      "recruitProgress": null,
+      "signature": null,
+      "shot": null,
+      "shotType": null
     }
   ],
   "cups": [
@@ -218,48 +237,137 @@
           "rank": 1,
           "name": "四不过四队",
           "total": 12062.8,
-          "endings": ["紧急授课", "朝竭", "圣域", "不容拒绝"],
+          "endings": [
+            "紧急授课",
+            "朝竭",
+            "圣域",
+            "不容拒绝"
+          ],
           "members": [
-            { "name": "百川之海", "role": "高规格美愿", "score": 1966 },
-            { "name": "林锣绸缎", "role": "祖医美愿", "score": 1560 },
-            { "name": "先志", "role": "点刺死仇", "score": 3527 },
-            { "name": "团队位", "role": "蓝图死仇", "score": 3546 }
+            {
+              "name": "百川之海",
+              "role": "高规格美愿",
+              "score": 1966,
+              "memberRef": "jay"
+            },
+            {
+              "name": "林锣绸缎",
+              "role": "祖医美愿",
+              "score": 1560
+            },
+            {
+              "name": "圥忈",
+              "role": "点刺死仇",
+              "score": 3527,
+              "memberRef": "hanyushiqi"
+            },
+            {
+              "name": "团队位",
+              "role": "蓝图死仇",
+              "score": 3546
+            }
           ]
         },
         {
           "rank": 2,
           "name": "只因酒之杯队",
           "total": 12052.8,
-          "endings": ["紧急授课", "朝竭", "授法"],
+          "endings": [
+            "紧急授课",
+            "朝竭",
+            "授法"
+          ],
           "members": [
-            { "name": "冷依w", "role": "木特美愿", "score": 3170, "memberRef": "lengyiw" },
-            { "name": "Oblivionis", "role": "蓝图死仇", "score": 3427 },
-            { "name": "道安杨", "role": "神人美愿", "score": 1677, "memberRef": "daoyangbang" },
-            { "name": "团队位", "role": "拟态涂鸦", "score": 2676 }
+            {
+              "name": "冷依w",
+              "role": "木特美愿",
+              "score": 3170,
+              "memberRef": "lengyiw"
+            },
+            {
+              "name": "Oblivionis",
+              "role": "蓝图死仇",
+              "score": 3427,
+              "memberRef": "yancheng"
+            },
+            {
+              "name": "道安杨",
+              "role": "神人美愿",
+              "score": 1677,
+              "memberRef": "daoyangbang"
+            },
+            {
+              "name": "团队位",
+              "role": "拟态涂鸦",
+              "score": 2676
+            }
           ]
         },
         {
           "rank": 3,
           "name": "以大翔击碎奎隆队",
           "total": 8411.3,
-          "endings": ["紧急授课", "朝竭", "圣域", "别无所求"],
+          "endings": [
+            "紧急授课",
+            "朝竭",
+            "圣域",
+            "别无所求"
+          ],
           "members": [
-            { "name": "Ayanami", "role": "祖医美愿", "score": 1981 },
-            { "name": "哀珐迩尔的骨笔", "role": "蓝图死仇", "score": 2036 },
-            { "name": "落叶解三秋", "role": "木特美愿", "score": 2277 },
-            { "name": "团队位", "role": "近锋皇冠", "score": 1321 }
+            {
+              "name": "Ayanami",
+              "role": "祖医美愿",
+              "score": 1981
+            },
+            {
+              "name": "哀珐迩尔的骨笔",
+              "role": "蓝图死仇",
+              "score": 2036,
+              "memberRef": "guzhang"
+            },
+            {
+              "name": "落叶解三秋",
+              "role": "木特美愿",
+              "score": 2277,
+              "memberRef": "qiongyang"
+            },
+            {
+              "name": "团队位",
+              "role": "近锋皇冠",
+              "score": 1321
+            }
           ]
         },
         {
           "rank": 4,
           "name": "Ciallo猫懿锣队",
           "total": 6184.6,
-          "endings": ["紧急授课", "圣域"],
+          "endings": [
+            "紧急授课",
+            "圣域"
+          ],
           "members": [
-            { "name": "Pλn!!", "role": "祖医死仇", "score": 2128 },
-            { "name": "7929", "role": "木特死仇", "score": 1387 },
-            { "name": "倒春仰寒", "role": "近锋美愿", "score": 517 },
-            { "name": "团队位", "role": "蓝图美愿", "score": 1502 }
+            {
+              "name": "Pλn!!",
+              "role": "祖医死仇",
+              "score": 2128
+            },
+            {
+              "name": "7929",
+              "role": "木特死仇",
+              "score": 1387,
+              "memberRef": "shanluan"
+            },
+            {
+              "name": "倒春仰寒",
+              "role": "近锋美愿",
+              "score": 517
+            },
+            {
+              "name": "团队位",
+              "role": "蓝图美愿",
+              "score": 1502
+            }
           ]
         }
       ]
@@ -275,36 +383,122 @@
           "rank": 1,
           "name": "冠军厨小队",
           "total": 11477,
-          "endings": ["认知即重担", "虚无不俱", "时光之沙", "朝竭", "圣域", "不容拒绝", "别无所求"],
+          "endings": [
+            "认知即重担",
+            "虚无不俱",
+            "时光之沙",
+            "朝竭",
+            "圣域",
+            "不容拒绝",
+            "别无所求"
+          ],
           "members": [
-            { "lane": "水月与深蓝之树", "name": "激什戴尔", "role": "心胜维开", "score": 2260 },
-            { "lane": "探索者的根松止境", "name": "冷依w", "role": "木特新能开", "score": 3148, "memberRef": "lengyiw" },
-            { "lane": "萨卡兹的无终奇语", "name": "归化方人迦", "role": "点刺死仇新能开", "score": 3408 },
-            { "lane": "倪影与猩红孤钻", "name": "啊噗嚕苹果香蕉派", "role": "木特新能开", "score": 2311 }
+            {
+              "lane": "水月与深蓝之树",
+              "name": "溦什戴尔",
+              "role": "心胜维开",
+              "score": 2260,
+              "memberRef": "shu"
+            },
+            {
+              "lane": "探索者的根松止境",
+              "name": "冷依w",
+              "role": "木特新能开",
+              "score": 3148,
+              "memberRef": "lengyiw"
+            },
+            {
+              "lane": "萨卡兹的无终奇语",
+              "name": "归化方人迦",
+              "role": "点刺死仇新能开",
+              "score": 3408,
+              "memberRef": "guihuafangrenjia"
+            },
+            {
+              "lane": "倪影与猩红孤钻",
+              "name": "啊噗噜派",
+              "role": "木特新能开",
+              "score": 2311,
+              "memberRef": "qiongyang"
+            }
           ]
         },
         {
           "rank": 2,
           "name": "不会为时代儿队",
           "total": 10728,
-          "endings": ["命运的宠儿", "深寒造像", "迈入永恒", "别无所求"],
+          "endings": [
+            "命运的宠儿",
+            "深寒造像",
+            "迈入永恒",
+            "别无所求"
+          ],
           "members": [
-            { "lane": "水月与深蓝之树", "name": "静谧的星之森", "role": "人本新能开", "score": 2303 },
-            { "lane": "探索者的根松止境", "name": "Jiu.", "role": "科学新能开", "score": 3605 },
-            { "lane": "萨卡兹的无终奇语", "name": "那一天的松鼠，掉构想求~~", "role": "拟态死仇新能开", "score": 2058 },
-            { "lane": "倪影与猩红孤钻", "name": "ihtw", "role": "祖医谜迭香岳", "score": 2562 }
+            {
+              "lane": "水月与深蓝之树",
+              "name": "静谧的里之森林",
+              "role": "人本新能开",
+              "score": 2303,
+              "memberRef": "guzhang"
+            },
+            {
+              "lane": "探索者的根松止境",
+              "name": "Jiu.",
+              "role": "科学新能开",
+              "score": 3605,
+              "memberRef": "shanluan"
+            },
+            {
+              "lane": "萨卡兹的无终奇语",
+              "name": "那一天的松鼠，掉构起来~",
+              "role": "拟态死仇新能开",
+              "score": 2058,
+              "memberRef": "shaoyafan"
+            },
+            {
+              "lane": "倪影与猩红孤钻",
+              "name": "ihtw",
+              "role": "祖医谜迭香岳",
+              "score": 2562
+            }
           ]
         },
         {
           "rank": 3,
           "name": "甜品咕SP+1队",
           "total": 9701,
-          "endings": ["深寒造像", "时光之沙", "朝竭", "别无所求"],
+          "endings": [
+            "深寒造像",
+            "时光之沙",
+            "朝竭",
+            "别无所求"
+          ],
           "members": [
-            { "lane": "水月与深蓝之树", "name": "咕咕嘎嘎", "role": "心胜维开", "score": 1376 },
-            { "lane": "探索者的根松止境", "name": "px", "role": "科学新能开", "score": 3475 },
-            { "lane": "萨卡兹的无终奇语", "name": "Sunriser05", "role": "神人美愿", "score": 2325 },
-            { "lane": "倪影与猩红孤钻", "name": "比起大锁更爱吃甜品的教宗阁下", "role": "木特水月开", "score": 2157 }
+            {
+              "lane": "水月与深蓝之树",
+              "name": "咕咕嘎嘎",
+              "role": "心胜维开",
+              "score": 1376
+            },
+            {
+              "lane": "探索者的根松止境",
+              "name": "px",
+              "role": "科学新能开",
+              "score": 3475,
+              "memberRef": "yancheng"
+            },
+            {
+              "lane": "萨卡兹的无终奇语",
+              "name": "Sunriser05",
+              "role": "神人美愿",
+              "score": 2325
+            },
+            {
+              "lane": "倪影与猩红孤钻",
+              "name": "比起大锁更爱吃甜品的教宗阁下",
+              "role": "木特水月开",
+              "score": 2157
+            }
           ]
         }
       ]

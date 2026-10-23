@@ -392,6 +392,13 @@ code{font-family:var(--font-mono);font-size:.92em;color:var(--info)}
 .pcard:hover,.pcard:focus-visible{background:var(--surface)}
 .pcard-media{position:relative;aspect-ratio:16/10;overflow:hidden;background:#0b0e13;border-bottom:1px solid var(--line-2)}
 .pcard-media img{width:100%;height:100%;object-fit:cover;filter:saturate(.92) contrast(1.02);transition:filter .5s ease}
+/* 名片图待补：不显示破图，用首字 + 细斜纹占位 */
+.pcard-ph{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;height:100%;
+  background:repeating-linear-gradient(135deg,rgba(233,231,226,.03) 0 8px,transparent 8px 16px),#0b0e13;
+  color:var(--folio);font-size:34px;line-height:1;letter-spacing:.02em}
+.pcard-ph em{font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--tx-3);font-style:normal}
+.pcard:not(.is-openable){cursor:default}
+.pcard-alias{color:var(--tx-2)}
 .pcard:hover .pcard-media img{filter:saturate(1.02) contrast(1.05)}
 .pcard-body{padding:var(--gap-3) var(--gap-4) var(--gap-4);display:flex;flex-direction:column;gap:2px}
 .pcard-name{font-size:clamp(15px,1.3vw,18px);font-weight:700;display:flex;align-items:baseline;gap:8px;flex-wrap:wrap;overflow-wrap:anywhere}
